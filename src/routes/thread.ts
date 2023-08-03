@@ -156,5 +156,49 @@ console.log(req);
       return Response.json(retObj);
     } 
   },   
+  /**
+  * chat 単位のスレッド一覧
+  * @param
+  *
+  * @return
+  */   
+  get_list_chat: async function (req: any, res: any, env: any): Promise<Response>
+  {
+console.log(req);
+    let resulte: any = [];
+    const retObj = {ret: "NG", data: [], message: ''}
+    try{
+      let result: any = {};  
+      if (req) {
+        const sql = `
+        SELECT 
+        "Thread".id as thread_id
+        ,"Thread"."chatId"
+        ,"Thread"."chatPostId"
+        ,"Thread"."userId"
+        ,"Thread".title
+        ,"Thread".body
+        ,"Thread"."createdAt"
+        ,"Thread"."updatedAt"
+        ,"User".name as user_name
+        FROM Thread
+        LEFT OUTER JOIN "User" ON
+        ("User".id = "Thread"."userId")
+        WHERE "Thread"."chatId" = ${req.chatId}
+        ORDER BY Thread.id DESC
+        `;  
+        resulte = await env.DB.prepare(sql).all();
+        //console.log(resulte);
+        if(resulte.length < 1) {
+          console.error("Error, results.length < 1");
+          throw new Error('Error , get');
+        }              
+      }           
+      return Response.json({ret: "OK", data: resulte.results});
+    } catch (e) {
+      console.error(e);
+      return Response.json(retObj);
+    } 
+  },  
 }
 export default router;

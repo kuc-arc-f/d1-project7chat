@@ -107,6 +107,9 @@ const Router = {
     if (pathname === "/threads/delete") {
       response = await threadRouter.delete(req, res, env);  
     }
+    if (pathname === "/threads/get_list_chat") {
+      response = await threadRouter.get_list_chat(req, res, env);  
+    }
     //@ts-ignore
     return response;
   },
