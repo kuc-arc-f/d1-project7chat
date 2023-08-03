@@ -4,6 +4,7 @@ import userRouter from './routes/user';
 import chatRouter from './routes/chat';
 import chatPostRouter from './routes/chat_post';
 import threadRouter from './routes/thread';
+import bookmarkRouter from './routes/bookmark';
 //
 const Router = {
   /**
@@ -109,6 +110,16 @@ const Router = {
     }
     if (pathname === "/threads/get_list_chat") {
       response = await threadRouter.get_list_chat(req, res, env);  
+    }
+    /* bookmark */
+    if (pathname === "/bookmark/create") {
+      response = await bookmarkRouter.create(req, res, env);  
+    }
+    if (pathname === "/bookmark/delete") {
+      response = await bookmarkRouter.delete(req, res, env);  
+    }
+    if (pathname === "/bookmark/get_list") {
+      response = await bookmarkRouter.get_list(req, res, env);  
     }
     //@ts-ignore
     return response;
