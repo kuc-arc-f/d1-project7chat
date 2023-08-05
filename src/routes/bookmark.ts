@@ -86,24 +86,6 @@ console.log(req);
     try{
       let result: any = {};  
       if (req) {
-        /*
-        const sql = `
-        SELECT 
-        "Thread".id as thread_id
-        ,"Thread"."chatId"
-        ,"Thread"."userId"
-        ,"Thread".title
-        ,"Thread".body
-        ,"Thread"."createdAt"
-        ,"Thread"."updatedAt"
-        ,"User".name as user_name
-        FROM Thread
-        LEFT OUTER JOIN "User" ON
-        ("User".id = "Thread"."userId")
-        WHERE "Thread"."chatPostId" = ${req.chatPostId}
-        ORDER BY Thread.id DESC
-        `; 
-        */
         const sql = `
         SELECT 
         "BookMark".id as bookmark_id
@@ -111,6 +93,7 @@ console.log(req);
         ,"BookMark"."userId"
         ,"ChatPost".title
         ,"ChatPost".body
+        ,"ChatPost".id as chatPostId
         ,"BookMark"."createdAt"
         ,"BookMark"."updatedAt"
         ,"User".name as user_name
