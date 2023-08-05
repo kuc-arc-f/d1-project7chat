@@ -100,9 +100,10 @@ console.log(req);
         FROM BookMark
         INNER JOIN "ChatPost" ON
         ("ChatPost".id = "BookMark"."chatPostId")
-        LEFT OUTER JOIN "User" ON
+        INNER JOIN"User" ON
         ("BookMark".userId = "User"."id")
         WHERE "BookMark"."chatId" = ${req.chatId}
+        AND "BookMark"."userId" = ${req.userId}
         ORDER BY BookMark.id DESC        
         `; 
 //console.log(sql);
