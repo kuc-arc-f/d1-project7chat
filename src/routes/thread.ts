@@ -131,6 +131,7 @@ console.log(req);
         SELECT 
         "Thread".id as thread_id
         ,"Thread"."chatId"
+        ,"Thread"."chatPostId"
         ,"Thread"."userId"
         ,"Thread".title
         ,"Thread".body
@@ -138,6 +139,8 @@ console.log(req);
         ,"Thread"."updatedAt"
         ,"User".name as user_name
         FROM Thread
+        INNER JOIN "ChatPost" ON
+        ("Thread".chatPostId = "ChatPost".id)        
         LEFT OUTER JOIN "User" ON
         ("User".id = "Thread"."userId")
         WHERE "Thread"."chatPostId" = ${req.chatPostId}
@@ -182,6 +185,8 @@ console.log(req);
         ,"Thread"."updatedAt"
         ,"User".name as user_name
         FROM Thread
+        INNER JOIN "ChatPost" ON
+        ("Thread".chatPostId = "ChatPost".id)        
         LEFT OUTER JOIN "User" ON
         ("User".id = "Thread"."userId")
         WHERE "Thread"."chatId" = ${req.chatId}

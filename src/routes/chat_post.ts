@@ -115,9 +115,25 @@ console.log(req);
     const retObj = {ret: "NG", data: [], message: ''}
     try{
       if (req) {
+        /*
         const sql = `
         SELECT * FROM ChatPost
         WHERE id = ${req.id}
+        `;        
+        */
+        const sql = `
+        SELECT "ChatPost".id
+        ,"ChatPost"."chatId"
+        ,"ChatPost"."userId"
+        ,"ChatPost".title
+        ,"ChatPost".body
+        ,"ChatPost"."createdAt"
+        ,"ChatPost"."updatedAt"
+        ,"User".name as user_name
+        FROM ChatPost
+        LEFT OUTER JOIN "User" ON
+        ("User".id = "ChatPost"."userId")
+        WHERE "ChatPost".id = ${req.id}
         `;   
 console.log(sql);     
         result = await env.DB.prepare(sql).all();

@@ -98,14 +98,14 @@ console.log(req);
         ,"BookMark"."updatedAt"
         ,"User".name as user_name
         FROM BookMark
-        LEFT OUTER JOIN "ChatPost" ON
+        INNER JOIN "ChatPost" ON
         ("ChatPost".id = "BookMark"."chatPostId")
         LEFT OUTER JOIN "User" ON
         ("BookMark".userId = "User"."id")
         WHERE "BookMark"."chatId" = ${req.chatId}
         ORDER BY BookMark.id DESC        
         `; 
-  console.log(sql);
+//console.log(sql);
         resulte = await env.DB.prepare(sql).all();
         if(resulte.length < 1) {
           console.error("Error, results.length < 1");
@@ -149,6 +149,7 @@ console.log(req);
         WHERE "Thread"."chatId" = ${req.chatId}
         ORDER BY Thread.id DESC
         `;  
+console.log(sql);
         resulte = await env.DB.prepare(sql).all();
         //console.log(resulte);
         if(resulte.length < 1) {
