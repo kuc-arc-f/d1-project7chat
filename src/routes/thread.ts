@@ -145,9 +145,10 @@ console.log(req);
         ("User".id = "Thread"."userId")
         WHERE "Thread"."chatPostId" = ${req.chatPostId}
         ORDER BY Thread.id DESC
+        LIMIT 1000
         `;  
         resulte = await env.DB.prepare(sql).all();
-        //console.log(resulte);
+console.log(sql);
         if(resulte.length < 1) {
           console.error("Error, results.length < 1");
           throw new Error('Error , get');
@@ -191,9 +192,10 @@ console.log(req);
         ("User".id = "Thread"."userId")
         WHERE "Thread"."chatId" = ${req.chatId}
         ORDER BY Thread.id DESC
+        LIMIT 1000
         `;  
         resulte = await env.DB.prepare(sql).all();
-        //console.log(resulte);
+console.log(sql);
         if(resulte.length < 1) {
           console.error("Error, results.length < 1");
           throw new Error('Error , get');

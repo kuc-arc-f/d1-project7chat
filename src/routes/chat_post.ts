@@ -213,10 +213,11 @@ console.log(req);
         LEFT OUTER JOIN "User" ON
         ("User".id = "ChatPost"."userId")
         WHERE ChatPost.chatId = ${req.chatId}
-        ORDER BY ChatPost.id DESC        
+        ORDER BY ChatPost.id DESC   
+        LIMIT 1000     
         `;  
         resulte = await env.DB.prepare(sql).all();
-        //console.log(resulte);
+console.log(sql);
         if(resulte.length < 1) {
           console.error("Error, results.length < 1");
           throw new Error('Error , get');
@@ -256,10 +257,11 @@ console.log(req);
         ("User".id = "ChatPost"."userId")
         WHERE ChatPost.chatId = ${req.chatId}
         AND "body" like '%${req.seachKey}%'
-        ORDER BY ChatPost.id DESC        
+        ORDER BY ChatPost.id DESC   
+        LIMIT 1000     
         `;  
         resulte = await env.DB.prepare(sql).all();
-        //console.log(resulte);
+//console.log(sql);
         if(resulte.length < 1) {
           console.error("Error, results.length < 1");
           throw new Error('Error , get');

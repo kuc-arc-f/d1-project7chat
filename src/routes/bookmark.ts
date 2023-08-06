@@ -104,7 +104,8 @@ console.log(req);
         ("BookMark".userId = "User"."id")
         WHERE "BookMark"."chatId" = ${req.chatId}
         AND "BookMark"."userId" = ${req.userId}
-        ORDER BY BookMark.id DESC        
+        ORDER BY BookMark.id DESC 
+        LIMIT 1000       
         `; 
 //console.log(sql);
         resulte = await env.DB.prepare(sql).all();
@@ -149,6 +150,7 @@ console.log(req);
         ("User".id = "Thread"."userId")
         WHERE "Thread"."chatId" = ${req.chatId}
         ORDER BY Thread.id DESC
+        LIMIT 1000
         `;  
 console.log(sql);
         resulte = await env.DB.prepare(sql).all();
