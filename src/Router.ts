@@ -111,6 +111,9 @@ const Router = {
     if (pathname === "/threads/get_list_chat") {
       response = await threadRouter.get_list_chat(req, res, env);  
     }
+    if (pathname === "/threads/search") {
+      response = await threadRouter.search(req, res, env);  
+    }
     /* bookmark */
     if (pathname === "/bookmark/create") {
       response = await bookmarkRouter.create(req, res, env);  
@@ -120,6 +123,9 @@ const Router = {
     }
     if (pathname === "/bookmark/get_list") {
       response = await bookmarkRouter.get_list(req, res, env);  
+    }
+    if (pathname === "/bookmark/search") {
+      response = await bookmarkRouter.search(req, res, env);  
     }
     //@ts-ignore
     return response;

@@ -166,5 +166,54 @@ console.log(sql);
       return Response.json(retObj);
     } 
   },  
+  /**
+  *
+  * @param
+  *
+  * @return
+  */   
+  search: async function (req: any, res: any, env: any): Promise<Response>
+  {
+console.log(req);
+    let resulte: any = [];
+    const retObj = {ret: "NG", data: [], message: ''}
+    try{
+      let result: any = {};  
+      if (req) {
+        const sql = `
+        SELECT 
+        "BookMark".id as bookmark_id
+        ,"BookMark"."chatId"
+        ,"BookMark"."userId"
+        ,"ChatPost".title
+        ,"ChatPost".body
+        ,"ChatPost".id as chatPostId
+        ,"BookMark"."createdAt"
+        ,"BookMark"."updatedAt"
+        ,"User".name as user_name
+        FROM BookMark
+        INNER JOIN "ChatPost" ON
+        ("ChatPost".id = "BookMark"."chatPostId")
+        INNER JOIN"User" ON
+        ("BookMark".userId = "User"."id")
+        WHERE "BookMark"."chatId" = ${req.chatId}
+        AND "BookMark"."userId" = ${req.userId}
+        AND "ChatPost"."body" like '%${req.seachKey}%'
+        ORDER BY BookMark.id DESC 
+        LIMIT 1000       
+        `; 
+//console.log(sql);
+        resulte = await env.DB.prepare(sql).all();
+        if(resulte.length < 1) {
+          console.error("Error, results.length < 1");
+          throw new Error('Error , get');
+        }              
+      }           
+      return Response.json({ret: "OK", data: resulte.results});
+    } catch (e) {
+      console.error(e);
+      return Response.json(retObj);
+    } 
+  },  
 }
 export default router;

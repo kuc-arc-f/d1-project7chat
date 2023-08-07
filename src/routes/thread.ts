@@ -206,6 +206,54 @@ console.log(sql);
       console.error(e);
       return Response.json(retObj);
     } 
-  },  
+  },
+  /**
+  *
+  * @param
+  *
+  * @return
+  */
+ search: async function (req: any, res: any, env: any): Promise<Response>
+ {
+console.log(req);
+   let resulte: any = [];
+   const retObj = {ret: "NG", data: [], message: ''}
+   try{
+     let result: any = {};  
+     if (req) {
+       const sql = `
+       SELECT 
+       "Thread".id as thread_id
+       ,"Thread"."chatId"
+       ,"Thread"."chatPostId"
+       ,"Thread"."userId"
+       ,"Thread".title
+       ,"Thread".body
+       ,"Thread"."createdAt"
+       ,"Thread"."updatedAt"
+       ,"User".name as user_name
+       FROM Thread
+       INNER JOIN "ChatPost" ON
+       ("Thread".chatPostId = "ChatPost".id)        
+       LEFT OUTER JOIN "User" ON
+       ("User".id = "Thread"."userId")
+       WHERE "Thread"."chatId" = ${req.chatId}
+       AND "Thread"."body" like '%${req.seachKey}%'
+       ORDER BY Thread.id DESC
+       LIMIT 1000
+       `;  
+       resulte = await env.DB.prepare(sql).all();
+console.log(sql);
+       if(resulte.length < 1) {
+         console.error("Error, results.length < 1");
+         throw new Error('Error , get');
+       }              
+     }           
+     return Response.json({ret: "OK", data: resulte.results});
+   } catch (e) {
+     console.error(e);
+     return Response.json(retObj);
+   } 
+ },    
 }
 export default router;
