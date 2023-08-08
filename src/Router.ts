@@ -77,6 +77,9 @@ const Router = {
     if (pathname === "/chats/delete") {
       response = await chatRouter.delete(req, res, env);  
     }
+    if (pathname === "/chats/search") {
+      response = await chatRouter.search(req, res, env);  
+    }
     if (pathname === "/chat_posts/create") {
       response = await chatPostRouter.create(req, res, env);  
     }
